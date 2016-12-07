@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-ENV ZOOKEEPER_V 3.4.6
+ENV ZOOKEEPER_V 3.4.9
 ENV ZOOKEEPER_PATH /usr/local/share/zookeeper
 
 # update
@@ -11,7 +11,7 @@ RUN apt-get upgrade -y
 RUN apt-get install -y wget openjdk-7-jre-headless
 
 # zookeeper
-RUN wget http://apache.arvixe.com/zookeeper/zookeeper-${ZOOKEEPER_V}/zookeeper-${ZOOKEEPER_V}.tar.gz
+RUN wget http://apache.claz.org/zookeeper/zookeeper-${ZOOKEEPER_V}/zookeeper-${ZOOKEEPER_V}.tar.gz
 RUN tar -zxf zookeeper-*.tar.gz
 RUN rm zookeeper-*.tar.gz
 RUN mv zookeeper-* $ZOOKEEPER_PATH

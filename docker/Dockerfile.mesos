@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-ENV MESOS_V 0.24.0
+ENV MESOS_V 1.1.0
 
 # update
 RUN apt-get update

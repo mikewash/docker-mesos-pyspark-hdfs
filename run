@@ -74,7 +74,7 @@ function install_spark {
 function install_mesos {
     # no mesos binaries are provided at this time,
     # you must compile from source
-    MESOS_VERSION=0.24.0
+    MESOS_VERSION=1.1.0
 
     # sources available at <https://mesos.apache.org/gettingstarted/>
     wget http://www.apache.org/dist/mesos/${MESOS_VERSION}/mesos-${MESOS_VERSION}.tar.gz

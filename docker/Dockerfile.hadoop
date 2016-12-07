@@ -20,7 +20,8 @@ RUN echo 'net.ipv6.conf.default.disable_ipv6 = 1' >> /etc/sysctl.conf
 RUN echo 'net.ipv6.conf.lo.disable_ipv6 = 1' >> /etc/sysctl.conf
 
 # hadoop
-RUN wget http://apache.arvixe.com/hadoop/core/hadoop-${HADOOP_V}/hadoop-${HADOOP_V}.tar.gz
+RUN wget https://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_V}/hadoop-${HADOOP_V}.tar.gz
+# RUN wget http://apache.arvixe.com/hadoop/core/hadoop-${HADOOP_V}/hadoop-${HADOOP_V}.tar.gz
 RUN tar -zxf hadoop-*.tar.gz
 RUN rm hadoop-*.tar.gz
 RUN mv hadoop-* $HADOOP_HOME
