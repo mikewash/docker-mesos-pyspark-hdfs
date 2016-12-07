@@ -43,7 +43,7 @@ function install_docker {
 
     # install docker-compose
     # see <https://github.com/docker/compose/releases> for latest version
-    export COMPOSE_VERSION=1.4.2
+    export COMPOSE_VERSION=1.9.0
     sudo bash -c "curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
     sudo chmod +x /usr/local/bin/docker-compose
 
