@@ -65,7 +65,7 @@ Open a shell in the Hadoop container:
 
 Download a text file:
 
-    wget http://www.gutenberg.org/cache/epub/4300/pg4300.txt
+    wget https://raw.githubusercontent.com/arron-green/hadoop-city-farmers-market-example/master/input/pg4300.txt
 
 Then copy it to the HDFS:
 
