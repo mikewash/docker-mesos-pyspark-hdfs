@@ -94,7 +94,7 @@ function install_mesos {
 }
 
 function run_zookeeper {
-    sudo docker run --name mesos_zookeeper -itP mesos_zookeeper
+    sudo docker run -p 2181:2181 --name mesos_zookeeper -itP mesos_zookeeper 
 }
 
 function run_leader {
@@ -104,20 +104,23 @@ function run_leader {
 
 function run_follower {
     ZOOKEEPER_IP=$(show_ips | grep mesos_zookeeper | awk '{print $2}')
-    sudo docker run -e ZOOKEEPER=${ZOOKEEPER_IP}:2181 --name mesos_follower -itP mesos_follower
+    sudo docker run -e ZOOKEEPER=${ZOOKEEPER_IP}:2181 -e WORKDIR=mesos --name mesos_follower -itP mesos_follower
 }
 
 function run_hadoop {
     # note that the hostname (i.e. container name) cannot have an underscore in it
     # or java will throw a fit when spark tries to access the hadoop host.
-    sudo docker run --name hadoop -itP hadoop
+    sudo docker run -p 50070:50070 --name hadoop -itP hadoop
 }
 
 function run_pyspark {
     export LIBPROCESS_IP=$(ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{print $1}')
-    export PYSPARK_PYTHON=/usr/bin/python3
+    export PYSPARK_PYTHON=/usr/bin/python
+    #export PYSPARK_DRIVER_PYTHON=ipython3
+    export SPARK_LOCAL_IP="127.0.0.1"
+    export SPARKPUBLICDNS="127.0.0.1"
     HADOOP_IP=$(show_ips | grep hadoop | awk '{print $2}')
-    LEADER_IP=$(show_ips | grep mesos_zookeeper | awk '{print $2}')
+    LEADER_IP=$(show_ips | grep mesos-cluster | awk '{print $2}')
     python $1 "$LEADER_IP:2181" $HADOOP_IP
 }
 
