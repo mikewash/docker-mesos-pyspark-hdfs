@@ -114,8 +114,6 @@ function run_hadoop {
 }
 
 function run_pyspark {
-    export SPARK_WORKER_MEMORY=8g
-    
     export LIBPROCESS_IP=$(ifconfig docker0 | grep 'inet addr:' | cut -d: -f2 | awk '{print $1}')
     export PYSPARK_PYTHON=/usr/bin/python
     #export PYSPARK_DRIVER_PYTHON=ipython3
