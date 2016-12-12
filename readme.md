@@ -29,63 +29,53 @@ These can be setup by running:
     ./run install_mesos
     ./run install_spark
 
-### Building the images
 
-Then you can build the Docker images:
+### Running the Mesos Cluster
 
-    ./run build_images
+These containers and examples are from this project, https://github.com/mesosphere/docker-containers/tree/master/mesos
 
-This builds a base Mesos image, which is then used to build the leader and follower images. A Zookeeper image and a Hadoop image are also created.
+For Master
 
-### Running the containers
+docker run -p 5050:5050 -d --net=host \
+  -e MESOS_PORT=5050 \
+  -e MESOS_QUORUM=1 \
+  -e MESOS_REGISTRY=in_memory \
+  -e MESOS_LOG_DIR=/var/log/mesos \
+  -e MESOS_WORK_DIR=/var/tmp/mesos \
+  -v "$(pwd)/log/mesos:/var/log/mesos" \
+  -v "$(pwd)/tmp/mesos:/var/tmp/mesos" \
+  mesosphere/mesos-master:0.28.0-2.0.16.ubuntu1404
 
-First, start a Zookeeper container:
+For Slaves
 
-    ./run zookeeper
-
-Then start a Hadoop container:
-
-    ./run hadoop
-
-Then start a Mesos leader container:
-
-    ./run leader
-
-Finally, start a Mesos follower container:
-
-    ./run follower
+docker run -p 5051:5051 -d --net=host --privileged \
+  -e MESOS_SWITCH_USER=0 \
+  -e MESOS_PORT=5051 \
+  -e MESOS_LOG_DIR=/var/log/mesos \
+  -v "$(pwd)/log/mesos:/var/log/mesos" \
+  -e MESOS_MASTER=<ip address of the mesos master>:5050 \
+  mesosphere/mesos-slave:0.28.0-2.0.16.ubuntu1404
 
 ### Running the example
 
-First, setup a text file to work with in the HDFS.
+This program 
 
-Open a shell in the Hadoop container:
+python example5.py <ip address of the mesos master>
 
-    sudo docker exec -it hadoop bash
 
-Download a text file:
+Make sure the ip address is the same as the one you inputted for the slave or you will get this error message in the logs of the master and slave
 
-    wget https://raw.githubusercontent.com/arron-green/hadoop-city-farmers-market-example/master/input/pg4300.txt
+Failed to shutdown socket with fd 7: Transport endpoint is not connected
 
-Then copy it to the HDFS:
+or you will see this message after running the script
 
-    hadoop fs -put pg4300.txt /sample.txt
+Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient resources
 
-Now it will be available to Spark and the example can be run from the client machine:
+### Checking progress 
 
-    ./run pyspark example.py
+http://<public ip address for mesos master>:5050/#/
 
-### Running any PySpark script
-
-    ./run pyspark <my script>
-
-Just note that any PySpark script needs to know the Zookeeper IP(s) and the Hadoop IP. If you use this `run pyspark` command to run your script, then the Zookeeper IP(s) and the Hadoop IP are passed in as first and second arguments, respectively, so they can be accessed like so:
-
-    import sys
-    leader_ip = sys.argv[1]
-    hadoop_ip = sys.argv[2]
-
-Refer to the `example.py` script.
+This link will show you if your slave is properly connected with your master
 
 ### Other tools
 

@@ -72,7 +72,6 @@ function install_spark {
 }
 
 function install_mesos {
-    # no mesos binaries are provided at this time,
     # you must compile from source
     MESOS_VERSION=1.1.0
 
@@ -82,7 +81,12 @@ function install_mesos {
     rm mesos-*.tar.gz
 
     # dependencies
-    sudo apt-get install -y openjdk-7-jdk build-essential python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev
+    sudo apt-get install -y openjdk-7-jdk build-essential python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev make g++ zlib1g-dev libapr1-dev libcurl4-openssl-dev maven libsasl2-dev libsvn-dev python2.7 python2.7-dev
+    sudo add-apt-repository -y ppa:webupd8team/java
+    sudo apt-get update
+    sudo apt-get install -y oracle-java7-installer
+    sudo apt-get install -y oracle-java7-set-default
+    sudo cp /usr/bin/python2.7 /usr/bin/python
 
     # by default, this installs to /usr/local
     cd mesos*
