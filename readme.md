@@ -5,14 +5,10 @@ With a little modification of IP addresses this can easily be adapted to an actu
 The basic arrangement is this:
 
 - a Docker host machine, which also acts as the Spark _client_ (where Spark tasks are submitted from). This is what you are building images and running containers on.
-- a Docker container running a Zookeeper process for coordinating Mesos leaders
 - Docker container(s) running a Mesos master process to act as a leader
 - Docker container(s) running a Mesos slave process to act as a follower
-- a Docker container running Hadoop to host files with HDFS
 
 Almost everything is handled via the `run` script.
-
-Note that you can have multiple Zookeepers as well but the `run` script doesn't handle gathering those IPs properly yet.
 
 ### Client setup
 
@@ -62,10 +58,9 @@ docker run -p 5051:5051 -d --net=host --privileged \
 
 ### Running the example
 
-This program 
+This program generates 10000 letters and does a letter count and prints out a list of the letters in ascending order of the top 50.
 
 python example5.py <ip address of the mesos master>
-
 
 Make sure the ip address is the same as the one you inputted for the slave or you will get this error message in the logs of the master and slave
 

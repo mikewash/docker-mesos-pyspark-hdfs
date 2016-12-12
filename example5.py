@@ -4,17 +4,12 @@ import pyspark
 import random as ran
 import string
 
-zookeeper = sys.argv[1]
-hadoop_ip = sys.argv[2]
+master = sys.argv[1]
 
-
-src = 'hdfs://{}:8020/sample.txt'.format(hadoop_ip)
 conf = pyspark.SparkConf()
-#conf.setMaster('mesos://zk://{}/mesos'.format(zookeeper))
-conf.setMaster("mesos://172.31.34.240:5050")
+conf.setMaster("mesos://{}:5050".format(master))
 conf.setAppName('my_test_app')
 conf.set('spark.mesos.coarse', 'true')
-conf.set('spark.driver.memory', '8g')
 conf.set('spark.executor.uri', 'http://d3kbcqa49mib13.cloudfront.net/spark-2.0.2-bin-hadoop2.7.tgz')
 
 array = []
