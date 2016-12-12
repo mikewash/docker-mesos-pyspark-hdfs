@@ -36,6 +36,7 @@ These containers and examples are from this project, https://github.com/mesosphe
 
 For Master
 
+```
 docker run -p 5050:5050 -d --net=host \
   -e MESOS_PORT=5050 \
   -e MESOS_QUORUM=1 \
@@ -45,9 +46,11 @@ docker run -p 5050:5050 -d --net=host \
   -v "$(pwd)/log/mesos:/var/log/mesos" \
   -v "$(pwd)/tmp/mesos:/var/tmp/mesos" \
   mesosphere/mesos-master:0.28.0-2.0.16.ubuntu1404
+```
 
 For Slaves
 
+```
 docker run -p 5051:5051 -d --net=host --privileged \
   -e MESOS_SWITCH_USER=0 \
   -e MESOS_PORT=5051 \
@@ -55,6 +58,7 @@ docker run -p 5051:5051 -d --net=host --privileged \
   -v "$(pwd)/log/mesos:/var/log/mesos" \
   -e MESOS_MASTER=<ip address of the mesos master>:5050 \
   mesosphere/mesos-slave:0.28.0-2.0.16.ubuntu1404
+```
 
 ### Running the example
 
