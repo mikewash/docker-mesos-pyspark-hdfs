@@ -69,6 +69,7 @@ function install_spark {
     export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
 
     # install py4j for pyspark
+    sudo apt install -y python-pip
     sudo pip install py4j
 
     # setup sparkenv

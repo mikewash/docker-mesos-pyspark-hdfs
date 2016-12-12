@@ -3,14 +3,13 @@ These scripts allow you to simulate a multi-node Mesos cluster for running Spark
 With a little modification of IP addresses this can easily be adapted to an actual multi-node deployment.
 
 The basic arrangement is this:
-
 - a Docker host machine, which also acts as the Spark _client_ (where Spark tasks are submitted from). This is what you are building images and running containers on.
 - Docker container(s) running a Mesos master process to act as a leader
 - Docker container(s) running a Mesos slave process to act as a follower
 
 Almost everything is handled via the `run` script.
 
-### Client setup
+### Client setup (Setup on Ubuntu Machine)
 
 If you don't have `docker` and `docker-compose`, run:
 
@@ -60,7 +59,9 @@ docker run -p 5051:5051 -d --net=host --privileged \
 
 This program generates 10000 letters and does a letter count and prints out a list of the letters in ascending order of the top 50.
 
-python example5.py <ip address of the mesos master>
+```
+python example.py <ip address of the mesos master>
+```
 
 Make sure the ip address is the same as the one you inputted for the slave or you will get this error message in the logs of the master and slave
 
@@ -72,7 +73,9 @@ Initial job has not accepted any resources; check your cluster UI to ensure that
 
 ### Checking progress 
 
+```
 http://<public ip address for mesos master>:5050/#/
+```
 
 This link will show you if your slave is properly connected with your master
 
