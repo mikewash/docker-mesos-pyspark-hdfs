@@ -64,6 +64,10 @@ function install_spark {
     echo 'export PATH=$SPARK_HOME/bin:$PATH' >> ~/.bash_profile
     echo 'export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH' >> ~/.bash_profile
 
+    export SPARK_HOME=/usr/local/share/spark
+    export PATH=$SPARK_HOME/bin:$PATH
+    export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+
     # install py4j for pyspark
     sudo pip install py4j
 
