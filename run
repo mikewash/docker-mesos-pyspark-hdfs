@@ -54,6 +54,7 @@ function install_docker {
 function install_spark {
     # go to <spark.apache.org/downloads.html>
     # select and download the version you want
+    wget http://d3kbcqa49mib13.cloudfront.net/spark-2.0.2-bin-hadoop2.7.tgz
     tar -xzvf spark-*.tgz
     rm spark-*.tgz
     sudo mv spark* /usr/local/share/spark
@@ -81,11 +82,13 @@ function install_mesos {
     rm mesos-*.tar.gz
 
     # dependencies
-    sudo apt-get install -y openjdk-7-jdk build-essential python-dev python-boto libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev make g++ zlib1g-dev libapr1-dev libcurl4-openssl-dev maven libsasl2-dev libsvn-dev python2.7 python2.7-dev
+    #libcurl4-openssl-dev 
+    sudo apt-get install -y zlib1g-dev libapr1-dev libsasl2-dev libsvn-dev build-essential libcurl4-nss-dev python-dev python-boto make g++ maven 
     sudo add-apt-repository -y ppa:webupd8team/java
     sudo apt-get update
     sudo apt-get install -y oracle-java7-installer
     sudo apt-get install -y oracle-java7-set-default
+    sudo apt-get install -y python2.7 python2.7-dev
     sudo cp /usr/bin/python2.7 /usr/bin/python
 
     # by default, this installs to /usr/local
